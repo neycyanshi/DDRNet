@@ -21,9 +21,9 @@ Any NVIDIA GPUs with 5GB memory suffices. For training, we recommend 4xGPU with 
 
 ### Before Start
 Clone the repository.
-    ```shell
-    git clone https://github.com/neycyanshi/DDRNet.git
-    ```
+```
+git clone https://github.com/neycyanshi/DDRNet.git
+```
 
 ### Preparation
 1. Download dataset or prepare your own data. In the dataset folder:
@@ -50,7 +50,7 @@ Clone the repository.
 
 3. (Optional) Preproccess
     - `depth_filled` and `mask`: fill small holes in depth map and get salient mask using the following command.
-    ```shell
+    ```
     python data_utils/dilate_erode.py dataset/20170907
     ```
     - `albedo`: get offline albedo using methods like [Retinex algorithm](https://github.com/lmurmann/retinex) or [Reflectance Filtering](https://github.com/tnestmeyer/reflectance-filtering).
@@ -67,14 +67,14 @@ Clone the repository.
     ```
 2. Edit `eval.sh` by modifing `checkpoint_dir` and `csv_path` to yours.
 3. Run test script and save results to `$RESULT_DIR` directory. Denoised depth map (*D_dn*) `dn_frame_%6d.png` and refined depth map (*D_dt*) `dt_frame_%6d.png` will be saved.
-    ```shell
+    ```
     sh eval.sh $RESULT_DIR/  # RESULT_DIR=sample
     ```
 
 ### Training
 1. `train.sh` is an example of how to train this network, please edit `index_file` and `dataset_dir` to yours.
 2. Run train script and save checkpoints to specified directory. Here `$LOG_DIR` is the parent directory of `$EXPM_DIR`. Log, network graph and model parameters (checkpoints) are saved in `$EXPM_DIR`. `$GPU_ID` is the selected gpu id. If `GPU_ID=0`, training is done on the first GPU.
-    ```shell
+    ```
     sh train.sh $LOG_DIR/$EXPM_DIR/ $GPU_ID  # LOG_DIR=cscd EXPM_DIR=noBN_L1_sd100_B16
     tensorboard --logdir=log/$LOG_DIR/$EXPM_DIR --port=6006  # visualizing training.
     ```
