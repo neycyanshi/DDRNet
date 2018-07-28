@@ -1,0 +1,2 @@
+model_checkpoint_path: "./noBN_L1_sd100_B16-6000"
+all_model_checkpoint_paths: "./noBN_L1_sd100_B16-6000"
