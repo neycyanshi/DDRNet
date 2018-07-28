@@ -20,7 +20,7 @@ DDRNet is described in [ECCV 2018 paper](https://null). It is worth noticing tha
 Any NVIDIA GPUs with 5GB memory suffices. For training, we recommend 4xGPU with 12G memory.
 
 ### Before Start
-Clone the repository  
+Clone the repository.
     ```shell
     git clone https://github.com/neycyanshi/DDRNet.git
     ```
