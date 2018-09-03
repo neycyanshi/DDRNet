@@ -17,52 +17,6 @@ def batch_norm_params(is_training):
     }
 
 
-def loss(depth_dn, depth_dt, depth_gt, config, normal_dn=None, normal_dt=None, normal_gt=None, color=None, mask=None, abd=None):
-    '''
-    :param depth_dn: NHWC denoised depth_dn.
-    :param depth_gt: NHWC near ground truth depth.
-    :param normal_dt: NCHW normal_dt computed from depth_dt after dt_net.
-    :param normal_gt: NCHW normal_gt computed by depth_to_normal ops.
-    :param color: NHWC color/gray image.
-    :param mask: NHW1 mask from gt or RGB segmentation.
-    :return: aggregated loss.
-    '''
-
-    if config.dtnet == "None": assert (depth_dt is None) and (normal_dt is None)
-
-    batch_size = config.batch_size
-    range_scale = (config.up_thres - config.low_thres) / (1.0 + 1.0)
-    mask = ops.convertNHWC2NCHW(mask, name='mask_NCHW')
-    depth_dn = ops.convertNHWC2NCHW(depth_dn, name='depth_NCHW')
-    depth_gt = ops.convertNHWC2NCHW(depth_gt, name='depth_gt_NCHW')
-    if config.has_abd:
-        assert abd is not None
-        abd = ops.convertNHWC2NCHW(abd, name='abd_NCHW')
-
-    # dn_net Loss
-    if config.dnnet != "None":
-        # depthGradLoss = losses.tv_loss(depth_dn, mask, loss_weight=0.1, scope='dn_depthGradLoss')
-        # normalGradLoss = losses.tv_loss(normal_dn, mask, loss_weight=1e-3, scope='dn_normalGradLoss')  # rm high freq in normal_dn
-        # normaldotLoss = losses.normaldot_loss_tf(depth_dn, normal_gt, config, weight=1e-6, scope='dn_normaldottfLoss')
-        # L2Loss = losses.L2loss(depth_dn, depth_gt, weight=1e2, scope='dn_L2Loss')  # deprecated. ref has mask now.
-        maskedLoss = losses.masked_loss(depth_dn, depth_gt, batch_size, mask,
-                                        huber=0.0, L1=1.0, L2=0.0, weight=1.0, rng_scale=range_scale, scope='dn_maskedLoss')
-
-    # dt_net Loss
-    if config.dtnet != "None":
-        depth_dt = ops.convertNHWC2NCHW(depth_dt, name='depth_dt')
-        fidelityLoss = losses.masked_loss(depth_dt, depth_gt, batch_size, mask,
-                                          huber=0.0, L1=1.0, L2=0.0, weight=1.0, rng_scale=range_scale,
-                                          scope='dt_fidelityLoss')
-        shadingLoss, irrad, albedo = losses.shading_loss(normal_dt, normal_gt,
-                                                         ops.convertNHWC2NCHW(color, name='color_NCHW'), mask, abd=abd, weight=100,
-                                                         scope='dt_shadingLoss')
-        # smoothLoss = losses.tv_loss(depth_dt, mask, loss_weight=0.1, scope='dt_smoothLoss')
-
-    print('Logging loss value: "loss1" is {}; "loss2" is {}'.format('maskedLoss', 'fidelityLoss'))
-    return tf.add_n(tf.get_collection(losses.LOSSES_COLLECTION), name='total_loss'), maskedLoss, fidelityLoss, (irrad, albedo)
-
-
 def base(x, is_training, aux=None, reuse=None, scope=None, ngf=16):
     with tf.variable_scope(scope or 'model', reuse=reuse) as scp:
         end_pts_collection = scp.name + 'end_pts'
