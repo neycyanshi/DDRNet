@@ -1,7 +1,6 @@
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 
-import losses
 import ops
 from ops import resize_like, resize_conv, instance_norm
 import resnet_model as res
