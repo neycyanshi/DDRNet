@@ -30,6 +30,7 @@ CTestTestfile.cmake
 # log/
 # sample/
 build/*
+log/*
 build*/
 # dataset/*
 !/data_utils/retinex

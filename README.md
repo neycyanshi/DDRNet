@@ -12,12 +12,12 @@ DDRNet is described in [ECCV 2018 paper](https://null). It is worth noticing tha
 - It combines supervised and unsupervised learning to solve the issue of lacking ground truth training data.
 
 ### Requirements: Software
-- Python > 2.7
-- TensorFlow >= 1.3.0
+- Python > 3.5.2
+- TensorFlow >= 1.8.0
 - numpy, scipy, scikit-image
 
 ### Requirements: Hardware
-Any NVIDIA GPUs with 5GB memory suffices. For training, we recommend 4xGPU with 12G memory.
+Any NVIDIA GPUs with 5GB memory suffices. For training, we recommend 4xGPU with 8G memory.
 
 ### Before Start
 Clone the repository.
@@ -57,6 +57,12 @@ git clone https://github.com/neycyanshi/DDRNet.git
     - `albedo`: get offline albedo using methods like [Retinex algorithm](https://github.com/lmurmann/retinex) or [Reflectance Filtering](https://github.com/tnestmeyer/reflectance-filtering).
 
 ### Testing
+1. Deploy model by
+    ```
+    docker run --runtime=nvidia -it --rm tensorflow/tensorflow:1.8.0-devel-gpu-py3
+    ```
+
+
 1. Please download our pre-trained model from [Google Drive](https://drive.google.com/open?id=10sAnwirBx4P98LpwI3Ku0v013VSQ_qEc) or [Baidu Pan](https://pan.baidu.com/s/1YRiFy3s1-vZAlt9sx9aiVw), and put them under folder `log/cscd/noBN_L1_sd100_B16/`, and we call this checkpoint directory as `$CKPT_DIR`.
     Make sure it looks like this:
     ```
