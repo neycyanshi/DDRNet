@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.5)
+project(tf_test)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(SOURCE_FILES cc/play.cc)
+
+
+include_directories(
+	/media/nvme0n1/pkgs/tensorflow
+	/media/nvme0n1/pkgs/tensorflow/bazel-genfiles
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/gen/protobuf/include
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/gen/host_obj
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/gen/proto
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/downloads/nsync/public
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/downloads/eigen
+	/media/nvme0n1/pkgs/tensorflow/tensorflow/contrib/makefile/downloads/absl
+	)
+
+add_executable(tf_test ${SOURCE_FILES})
+
+target_link_libraries(tf_test
+        /usr/local/lib/libtensorflow_cc.so
+        /usr/local/lib/libtensorflow_framework.so
+        )
