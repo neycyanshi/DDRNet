@@ -1,6 +1,3 @@
-src/train.py
-src/trainer.py
-src/lighting.py
 noBN_L1_sd100_B16-6000*
 
 *.idea
