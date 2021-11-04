@@ -6,7 +6,7 @@ The major contributers of this repository include [Shi Yan](https://github.com/n
 
 <img src="dataset/pipe.png">
 
-DDRNet is described in [ECCV 2018 paper](https://null). It is worth noticing that:
+DDRNet is described in [ECCV 2018 paper](https://openaccess.thecvf.com/content_ECCV_2018/papers/Shi_Yan_DDRNet_Depth_Map_ECCV_2018_paper.pdf). It is worth noticing that:
 - DDRNet leverages the multi-frame fused geometry and the accompanying high quality color image through a joint training strategy.
 - Each sub-network focuses on lifting the quality in different frequency domains.
 - It combines supervised and unsupervised learning to solve the issue of lacking ground truth training data.
